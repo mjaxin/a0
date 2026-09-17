@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -13,11 +14,19 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,61 +49,77 @@ class MainActivity : ComponentActivity() {
 }
 @Composable
 fun InitialScreen(modifier: Modifier = Modifier) {
+    var displayString by remember { mutableStateOf("Are WE yes WE going here?")}
+    var count by remember { mutableStateOf(0)}
 
-    Column(modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally ) {
-        Row(modifier = Modifier.padding(16.dp)) {
+    Column(modifier = modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center ) {
+        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(
-                text = "I have no idea how to code in Kotlin",
+                text = displayString,
                 modifier = Modifier.fillMaxWidth(),
                 textAlign = TextAlign.Center
             )
 
         }
-
-        Row(modifier = modifier.fillMaxSize(), verticalAlignment = Alignment.CenterVertically) {
-            Button(
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            Button(colors = ButtonDefaults.buttonColors(containerColor = Color.Green),
                 onClick = {
+                    count++
                     if (determineOutcome(1)) {
-                        println("bro")
-                        // Output yes
+                        displayString = "Yes"
                     }
                     else {
-                        println("bro")
-                        // Output no
+                        displayString = "No"
                     }
                 }
+
             ) {
                 Text("YES YES YES")
             }
-
-            Button(
+            Button(colors = ButtonDefaults.buttonColors(containerColor = Color.Yellow,
+                Color.Black),
                 onClick = {
+                    count++
                     if (determineOutcome(2)) {
-                        println("bro")
-                        // Output yes
+                        displayString = "Yes"
                     }
                     else {
-                        println("bro")
-                        // Output no
+                        displayString = "No"
                     }
                 }
             ) {
                 Text("Perhaps...")
             }
-            Button(
+            Button(colors = ButtonDefaults.buttonColors(containerColor = Color.Red),
                 onClick = {
+                    count++
                     if (determineOutcome(3)) {
-                        println("bro")
-                        // Output yes
+                        displayString = "Yes"
                     }
                     else {
-                        println("bro")
-                        // Output no
+                        displayString = "No"
                     }
                 }
             ) {
                 Text("NO NO NO")
             }
+        }
+        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "Button presses: $count",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+
+        }
+        Row(modifier = Modifier.padding(16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Text(
+                text = "CCID: mpjackso, ID: 1800321",
+                modifier = Modifier.fillMaxWidth(),
+                textAlign = TextAlign.Center
+            )
+
         }
     }
 }
@@ -116,4 +141,12 @@ fun determineOutcome(buttonPushed : Int) : Boolean {
     }
 
     return false
+}
+
+@Preview(showBackground = true)
+@Composable
+fun CityListScreenPreview() {
+    CMPUT301Assignment0Theme {
+        InitialScreen(modifier = Modifier.padding())
+    }
 }
